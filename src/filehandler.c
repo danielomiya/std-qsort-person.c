@@ -2,25 +2,26 @@
  * Created by Daniel Omiya on 27/08/21.
  */
 
-#include "filereader.h"
+#include "filehandler.h"
+#include "person.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 void readPeople(const char *path, int max, struct person *people[], int *out) {
-  FILE *f;
+  FILE *fp;
   struct person *person;
   char lineBuffer[BUFFER_SIZE], nameBuffer[BUFFER_SIZE];
   int currentLine, age;
   float height;
 
-  f = fopen(path, "r");
+  fp = fopen(path, "r");
 
-  if (f == NULL)
+  if (fp == NULL)
     exit(INTERNAL_ERROR);
 
   currentLine = 0;
-  while (currentLine < max && fgets(lineBuffer, BUFFER_SIZE, f)) {
+  while (currentLine < max && fgets(lineBuffer, BUFFER_SIZE, fp)) {
     person = malloc(sizeof(struct person));
     sscanf(lineBuffer, "%[^,],%d,%f", nameBuffer, &age, &height);
     makePerson(person, nameBuffer, age, height);
@@ -28,7 +29,27 @@ void readPeople(const char *path, int max, struct person *people[], int *out) {
     people[currentLine] = person;
     ++currentLine;
   }
-  fclose(f);
+  fclose(fp);
 
   *out = currentLine;
+}
+
+void writePeople(const char *path, int n, struct person *people[]) {
+  FILE *fp;
+  struct person *person;
+  char buffer[BUFFER_SIZE];
+  int i;
+
+  fp = fopen(path, "w");
+
+  if (fp == NULL)
+    exit(INTERNAL_ERROR);
+
+  for (i = 0; i < n; ++i) {
+    person = people[i];
+    stringifyPerson(person, buffer);
+    fputs(buffer, fp);
+    fputc('\n', fp);
+  }
+  fclose(fp);
 }

@@ -2,8 +2,8 @@
  * Created by Daniel Omiya on 27/08/21.
  */
 
-#ifndef FILEWRITER_H
-#define FILEWRITER_H
+#ifndef FILEHANDLER_H
+#define FILEHANDLER_H
 
 #include "person.h"
 
@@ -15,6 +15,7 @@
 #define INTERNAL_ERROR 500
 #endif
 
+void readPeople(const char *path, int n, struct person *people[], int *out);
 void writePeople(const char *path, int n, struct person *people[]);
 
-#endif /* FILEWRITER_H */
+#endif /* FILEHANDLER_H */

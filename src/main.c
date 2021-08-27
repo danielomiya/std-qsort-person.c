@@ -2,8 +2,7 @@
  * Created by Daniel Omiya on 27/08/21.
  */
 
-#include "filereader.h"
-#include "filewriter.h"
+#include "filehandler.h"
 #include "person.h"
 #include <stdio.h>
 #include <stdlib.h>
