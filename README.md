@@ -5,7 +5,7 @@ A simple proof of concept of the usage of structs and files, written in the C la
 ## Algorithm
 
 - read entries at `data/in.csv`
-- parse into a `struct` called `person`
+- parse them into a `struct` called `person`
 - sort them by height ascending
 - write sorted entries to `data/out.csv`
 
