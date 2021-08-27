@@ -1,0 +1,6 @@
+build/
+
+data/
+!data/in.csv
+
+.idea
