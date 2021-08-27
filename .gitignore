@@ -1,6 +1,6 @@
 build/
 
-data/
+data/*
 !data/in.csv
 
-.idea
+.idea/
