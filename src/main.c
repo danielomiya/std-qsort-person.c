@@ -1,4 +1,4 @@
-/*
+/**
  * Created by Daniel Omiya on 27/08/21.
  */
 
@@ -10,11 +10,7 @@
 
 #define ARR_SIZE 1024
 
-void freeResources(struct person *people[], int n) {
-  int i;
-  for (i = 0; i < n; i++)
-    destroyPerson(people[i]);
-}
+void freeResources(struct person *people[], int n);
 
 int main() {
   struct person *people[ARR_SIZE];
@@ -36,4 +32,10 @@ int main() {
 
   printf("Done!\n");
   return 0;
+}
+
+void freeResources(struct person *people[], int n) {
+  int i;
+  for (i = 0; i < n; i++)
+    destroyPerson(people[i]);
 }
