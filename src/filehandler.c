@@ -8,30 +8,50 @@
 #include <stdlib.h>
 #include <string.h>
 
+struct person *readPersonRecord(FILE *fp) {
+  char lineBuffer[BUFFER_SIZE], nameBuffer[BUFFER_SIZE];
+  struct person *person = NULL;
+  int age;
+  float height;
+
+  if (fgets(lineBuffer, BUFFER_SIZE, fp)) {
+    sscanf(lineBuffer, "%[^\n]", nameBuffer);
+
+    fgets(lineBuffer, BUFFER_SIZE, fp);
+    sscanf(lineBuffer, "%d", &age);
+
+    fgets(lineBuffer, BUFFER_SIZE, fp);
+    sscanf(lineBuffer, "%f", &height);
+
+    person = malloc(sizeof(struct person));
+    makePerson(person, nameBuffer, age, height);
+  }
+
+  return person;
+}
+
 void readPeople(const char *path, int max, struct person *people[], int *out) {
   FILE *fp;
   struct person *person;
-  char lineBuffer[BUFFER_SIZE], nameBuffer[BUFFER_SIZE];
-  int currentLine, age;
-  float height;
+  int currentRecord;
 
   fp = fopen(path, "r");
 
   if (fp == NULL)
     exit(INTERNAL_ERROR);
 
-  currentLine = 0;
-  while (currentLine < max && fgets(lineBuffer, BUFFER_SIZE, fp)) {
-    person = malloc(sizeof(struct person));
-    sscanf(lineBuffer, "%[^,],%d,%f", nameBuffer, &age, &height);
-    makePerson(person, nameBuffer, age, height);
+  currentRecord = 0;
+  while (currentRecord < max) {
+    person = readPersonRecord(fp);
 
-    people[currentLine] = person;
-    ++currentLine;
+    if (person == NULL)
+      break;
+
+    people[currentRecord++] = person;
   }
   fclose(fp);
 
-  *out = currentLine;
+  *out = currentRecord;
 }
 
 void writePeople(const char *path, int n, struct person *people[]) {
@@ -52,4 +72,13 @@ void writePeople(const char *path, int n, struct person *people[]) {
     fputc('\n', fp);
   }
   fclose(fp);
+}
+
+int fileExists(const char *path) {
+  FILE *fp;
+  fp = fopen(path, "r");
+  if (fp == NULL)
+    return FALSE;
+  fclose(fp);
+  return TRUE;
 }
