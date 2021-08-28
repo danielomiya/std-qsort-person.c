@@ -10,7 +10,7 @@
 void makePerson(struct person *person, const char *name, int age, float height) {
   int nameLength = strlen(name) + 1;
 
-  person->name = malloc(nameLength);
+  person->name = malloc(nameLength * sizeof(char));
   strcpy(person->name, name);
 
   person->age = age;
@@ -29,5 +29,5 @@ int comparePerson(const struct person **a, const struct person **b) {
 }
 
 void stringifyPerson(const struct person *person, char *out) {
-  sprintf(out, "%s,%d,%.2f", person->name, person->age, person->height);
+  sprintf(out, "%s\n%d\n%.2f", person->name, person->age, person->height);
 }
