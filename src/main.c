@@ -25,7 +25,12 @@ int main() {
   scanf("%s", outputPath);
 
   if (!fileExists(inputPath)) {
-    printf("Input file could not be found\n");
+    printf("File %s could not be found\n", inputPath);
+    exit(CLIENT_ERROR);
+  }
+
+  if (!fileCanBeCreated(outputPath)) {
+    printf("Current program is unable to write to %s\n", outputPath);
     exit(CLIENT_ERROR);
   }
 

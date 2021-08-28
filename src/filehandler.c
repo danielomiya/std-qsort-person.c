@@ -82,3 +82,12 @@ int fileExists(const char *path) {
   fclose(fp);
   return TRUE;
 }
+
+int fileCanBeCreated(const char *path) {
+  FILE *fp;
+  fp = fopen(path, "a");
+  if (fp == NULL)
+    return FALSE;
+  fclose(fp);
+  return TRUE;
+}

@@ -26,5 +26,6 @@
 void readPeople(const char *path, int n, struct person *people[], int *out);
 void writePeople(const char *path, int n, struct person *people[]);
 int fileExists(const char *path);
+int fileCanBeCreated(const char *path);
 
 #endif /* FILEHANDLER_H */
